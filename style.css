@@ -66,6 +66,7 @@ ul {
 
 .text-gradient {
     background: linear-gradient(90deg, var(--primary), var(--secondary));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
@@ -204,8 +205,46 @@ ul {
     font-size: 1.5rem;
     color: var(--primary);
     cursor: pointer;
-    margin-right: 15px;
-    /* Add space for theme toggle */
+    z-index: 1001;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.nav-toggle:hover {
+    transform: scale(1.1);
+}
+
+.nav-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Mobile menu styles */
+.nav-links.mobile-active {
+    display: flex !important;
+    flex-direction: column;
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    width: 100%;
+    background: rgba(10, 17, 36, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+    gap: 15px;
+    border-bottom: 2px solid var(--primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -244,7 +283,7 @@ ul {
 
 .hero h1 {
     font-family: var(--font-heading);
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 1.1;
     margin-bottom: 20px;
     text-transform: uppercase;
@@ -299,10 +338,11 @@ ul {
 }
 
 .hero-sub {
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 2vw, 1.1rem);
     color: var(--text-muted);
     margin-bottom: 40px;
     max-width: 500px;
+    line-height: 1.6;
 }
 
 .hero-btns {
@@ -314,13 +354,17 @@ ul {
     padding: 15px 35px;
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2vw, 1rem);
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 4px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-primary {
@@ -606,7 +650,7 @@ ul {
 
 .section-title {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 2.5rem);
     margin-bottom: 20px;
 }
 
@@ -973,25 +1017,34 @@ footer::before {
 }
 
 /* Responsive */
+
+/* Tablet and below (< 992px) */
 @media (max-width: 992px) {
-    .hero h1 {
-        font-size: 3rem;
+    :root {
+        --section-padding: 80px 0;
+    }
+
+    .container {
+        width: 95%;
+        padding: 0 15px;
     }
 
     .hero-container,
     .about-container,
     .contact-container {
         grid-template-columns: 1fr;
-        text-align: center;
+        gap: 40px;
     }
 
     .hero-content {
         order: 2;
+        text-align: center;
     }
 
     .hero-visual {
         order: 1;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
+        height: 500px;
     }
 
     .nav-links {
@@ -1004,20 +1057,340 @@ footer::before {
 
     .hero-btns {
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .info-item {
         justify-content: center;
     }
-}
 
-@media (max-width: 768px) {
-    .stats-grid {
-        grid-template-columns: 1fr;
+    .about-content {
+        text-align: center;
     }
 
-    .section-title {
+    .contact-info {
+        text-align: center;
+    }
+
+    /* Services grid - 2 columns on tablet */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .service-card:nth-child(1) {
+        grid-column: span 1;
+    }
+
+    /* Stats grid - 2 columns on tablet */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+/* Tablet specific (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .service-card:nth-child(1) {
+        grid-column: span 2;
+    }
+
+    .hero-visual {
+        height: 550px;
+    }
+
+    .solar-system {
+        transform: scale(0.8);
+    }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 768px) {
+    :root {
+        --section-padding: 50px 0;
+        --nav-height: 70px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    /* Navigation */
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .logo-img {
+        height: 35px;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    /* Hero Section - OPTIMIZED */
+    .hero {
+        min-height: auto;
+        padding: calc(var(--nav-height) + 20px) 0 40px;
+    }
+
+    .hero-container {
+        gap: 20px;
+    }
+
+    .hero-visual {
+        height: 250px;
+        margin-bottom: 10px;
+    }
+
+    .solar-system {
+        transform: scale(0.45);
+        width: 400px;
+        height: 400px;
+    }
+
+    .cyber-badge {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+        margin-bottom: 15px;
+    }
+
+    .hero-sub {
+        margin-bottom: 25px;
+        font-size: 0.95rem;
+    }
+
+    .hero-btns {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px 20px;
+    }
+
+    /* Services - REDUCED SPACING */
+    .services {
+        padding: 50px 0;
+    }
+
+    .section-header {
+        margin-bottom: 30px;
+    }
+
+    .section-header p {
+        font-size: 0.9rem;
+    }
+
+    .services-grid {
+        gap: 15px;
+    }
+
+    .service-card {
+        padding: 20px;
+    }
+
+    .service-icon {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .service-card p {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .service-list li {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+
+    /* Tech Strip */
+    .tech-strip {
+        padding: 10px 0;
+        margin: 30px 0;
+    }
+
+    .tech-track span {
+        font-size: 0.95rem;
+    }
+
+    /* About Section - REDUCED SPACING */
+    .about {
+        padding: 50px 0;
+    }
+
+    .about-container {
+        gap: 30px;
+    }
+
+    .about-content p {
+        font-size: 0.95rem;
+        margin-bottom: 25px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    .stat-item {
+        padding: 12px;
+    }
+
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .hacker-ui {
+        padding: 12px;
+    }
+
+    .code-line {
+        font-size: 0.75rem;
+        margin-bottom: 3px;
+    }
+
+    /* Contact Section - REDUCED SPACING */
+    .contact {
+        padding: 50px 0;
+    }
+
+    .contact-container {
+        gap: 30px;
+    }
+
+    .contact-info p {
+        font-size: 0.95rem;
+    }
+
+    .contact-form {
+        padding: 20px;
+    }
+
+    .info-item {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+    }
+
+    .info-item i {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+    }
+
+    /* Footer */
+    footer {
+        padding: 30px 0;
+    }
+
+    .footer-left img {
+        height: 70px !important;
+    }
+
+    .footer-left strong {
+        font-size: 18px !important;
+    }
+
+    .footer-left span span {
+        font-size: 13px !important;
+    }
+}
+
+/* Small mobile (< 480px) */
+@media (max-width: 480px) {
+    :root {
+        --section-padding: 40px 0;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .hero {
+        padding: calc(var(--nav-height) + 15px) 0 30px;
+    }
+
+    .hero-visual {
+        height: 220px;
+    }
+
+    .solar-system {
+        transform: scale(0.4);
+        width: 350px;
+        height: 350px;
+    }
+
+    .hero h1 {
         font-size: 2rem;
+    }
+
+    .hero-sub {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .service-card {
+        padding: 18px;
+    }
+
+    .service-icon {
+        font-size: 2rem;
+    }
+
+    .contact-form {
+        padding: 18px;
+    }
+
+    .btn {
+        padding: 10px 18px;
+        font-size: 0.85rem;
+    }
+
+    .section-header {
+        margin-bottom: 25px;
+    }
+
+    .footer-left img {
+        height: 60px !important;
+    }
+
+    .footer-left strong {
+        font-size: 16px !important;
     }
 }
 
