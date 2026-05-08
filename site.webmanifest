@@ -1,0 +1,27 @@
+{
+  "name": "Quantum Shield Nepal",
+  "short_name": "QSN",
+  "description": "Specialist offensive security and AI research unit in Kathmandu, Nepal. Penetration testing, red teaming, and AI-driven security engineering.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "assets/logo/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["security", "business", "productivity"]
+}
